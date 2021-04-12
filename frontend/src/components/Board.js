@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import './Board.css'
+import './styles/Board.css'
 
 const BOARD_SIZE = 10
 
