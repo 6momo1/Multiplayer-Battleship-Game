@@ -6,3 +6,45 @@
 body {
   color: white;
 }
+
+/* board css */
+.board {
+  margin: 20px;
+  outline: 2px solid rgb(134, 154, 189);
+  width: 500px;
+}
+
+.row {
+  height: 50px;
+}
+
+.cell {
+  /* background-color: antiquewhite; */
+  color: white;
+  width: 50px;
+  height: 50px;
+  outline: 1px solid rgb(134, 154, 189);
+  display: inline-block;
+}
+
+/* Grid css */
+.grid-user {
+  width: 400px;
+  height: 400px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: blanchedalmond;
+}
+
+.grid div {
+  width: 40px;
+  height: 40px;
+}
+
+.grid-opponent {
+  width: 400px;
+  height: 400px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: cadetblue;
+}

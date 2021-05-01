@@ -1,8 +1,10 @@
 import React from 'react'
 import Grid from './Grid'
+import "../App.css"
+
 const GameDisplay = () => {
     return (
-        <div>
+        <div className="container">
             <Grid player="user"/>
             <Grid player="opponent"/>
         </div>

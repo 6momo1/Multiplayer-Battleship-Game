@@ -4,6 +4,7 @@ import Info from './components/Info';
 import ShipContainer from './components/ShipContainer';
 import Grid from './components/Grid'
 import GameDisplay from './components/GameDisplay';
+import GridDisplay from './components/GridDisplay';
 
 function App() {
 
@@ -11,14 +12,13 @@ function App() {
     <div className="App">
 
       <div className="container">
-        <Grid/>
-        {/* <Board/>
-        <Board/> */}
-        <GameDisplay></GameDisplay>
+        <Grid player="user"></Grid>
+        <Grid player="opponent"></Grid>
       </div>
 
       <Info/>
-      <ShipContainer/>
+      {/* <ShipContainer/> */}
+      <GridDisplay player="display"></GridDisplay>
     </div>
   );
 }
