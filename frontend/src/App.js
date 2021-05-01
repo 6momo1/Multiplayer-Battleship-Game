@@ -18,7 +18,7 @@ function App() {
 
       <Info/>
       {/* <ShipContainer/> */}
-      <GridDisplay player="display"></GridDisplay>
+      <GridDisplay ></GridDisplay>
     </div>
   );
 }

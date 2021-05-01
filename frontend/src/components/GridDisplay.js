@@ -11,28 +11,31 @@ const GridDisplay = ({ player }) => {
         return divs
     }
 
-    function createShipContainer(name, size){
-        <div className={`ship ${name}-container`} draggable="true">
-            { createShipNodes(name, size) }
-        </div>
-    }
 
     return (
-            <div className="grid" className={"grid-" + player}>
+            <div className="grid-display" >
 
                 <div className="ship destroyer-container" draggable="true">
-                    <div id="destroyer-0"></div>
-                    <div id="destroyer-1"></div>
+                    { createShipNodes("destroyer", 2) }
                 </div>
 
                 <div className="ship submarine-container" draggable="true">
-                    {createShipNodes("submarine", 3)}
+                    { createShipNodes("submarine", 3) }
                 </div>
 
 
-                <div>
-                    
+                <div className="ship cruiser-container" draggable="true">
+                    { createShipNodes("cruiser", 3) }
                 </div>
+                
+                <div className="ship battleship-container" draggable="true">
+                    { createShipNodes("battleship", 4) }
+                </div>
+
+                <div className="ship carrier-container" draggable="true">
+                    { createShipNodes("carrier", 5) }
+                </div>
+
 
                 
             </div>

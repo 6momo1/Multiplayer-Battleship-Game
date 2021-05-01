@@ -13,7 +13,6 @@ const Board = () => {
         for (let i = 0; i < arr.length; i++) {
             arr[i] = new Array(rows).fill(0)
         }
-        console.log(arr);
         return arr
     }
 
