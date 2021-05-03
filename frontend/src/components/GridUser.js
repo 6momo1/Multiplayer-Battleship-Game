@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './styles/Grid.css'
 
-const Grid = ({ player }) => {
+const GridUser = ({ player }) => {
 
     const WIDTH = 10 
 
@@ -18,13 +18,13 @@ const Grid = ({ player }) => {
 
     return (
         <div>
-            <div className="grid" className={"grid-" + player}>
+            <div className="grid" className="grid-user">
                 { nodes.map( (node, nodeIdx) => (
-                    <div className="node" id={player+ nodeIdx}></div>
+                    <div className="node" id={"user"+nodeIdx}></div>
                 )) }
             </div>
         </div>
     )
 }
 
-export default Grid
+export default GridUser

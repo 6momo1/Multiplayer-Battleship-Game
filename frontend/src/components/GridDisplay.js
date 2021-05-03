@@ -1,8 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import './styles/GridDisplay.css'
 
-const GridDisplay = ({ player }) => {
+const GridDisplay = ({ shipArray, isHorizontal }) => {
 
+    const destroyerRef = useRef()
+    const ref = useRef(null)
+
+    // create div nodes by creating their length and assigning an ID
     function createShipNodes(name, size){
         const divs = []
         for (let i = 0; i < size; i++) {
@@ -11,11 +15,17 @@ const GridDisplay = ({ player }) => {
         return divs
     }
 
+    if (isHorizontal){
+        console.log(destroyerRef.current);
+        // div.className = (isHorizontal) ? "destroyer-container-vertical" : "destroyer-container"
+        // destroyerRef.current.className = (isHorizontal) ? "destroyer-container-vertical" : "destroyer-container"
+    }
+
 
     return (
             <div className="grid-display" >
 
-                <div className="ship destroyer-container" draggable="true">
+                <div ref={destroyerRef} className="ship destroyer-container" draggable="true">
                     { createShipNodes("destroyer", 2) }
                 </div>
 

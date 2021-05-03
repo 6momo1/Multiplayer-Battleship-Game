@@ -1,10 +1,10 @@
 import React from 'react'
 import Button from './Button'
-const Info = () => {
+const Info = ({toggleHorizontal}) => {
     return (
         <div>
             <Button text="Start Game"/>
-            <Button text="Rotate Your Ships"/>
+            <button onClick={toggleHorizontal}>Rotate your ships</button>
             <Button text="Next" />
             <h3>Information</h3>
         </div>
