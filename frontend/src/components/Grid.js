@@ -18,10 +18,11 @@ const Grid = ({ player }) => {
 
     return (
         <div>
-            <div className="grid" className={"grid-" + player}></div>
-            { nodes.map( (node, nodeIdx) => (
-                <div id={nodeIdx}></div>
-            )) }
+            <div className="grid" className={"grid-" + player}>
+                { nodes.map( (node, nodeIdx) => (
+                    <div className="node" id={player+ nodeIdx}></div>
+                )) }
+            </div>
         </div>
     )
 }

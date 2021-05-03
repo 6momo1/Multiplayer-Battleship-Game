@@ -3,6 +3,12 @@
   height: 40px;
 }
 
+.node {
+  display: flex;
+  width: 40px;
+  height: 40px;
+}
+
 .grid-opponent {
   width: 400px;
   height: 400px;
