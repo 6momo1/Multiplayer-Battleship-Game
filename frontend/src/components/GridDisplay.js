@@ -1,10 +1,33 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import './styles/GridDisplay.css'
 
 const GridDisplay = ({ shipArray, isHorizontal }) => {
 
     const destroyerRef = useRef()
-    const ref = useRef(null)
+    const submarineRef = useRef()
+    const cruiserRef = useRef()
+    const battleshipRef = useRef()
+    const carrierRef = useRef()
+
+    useEffect(() => {
+
+        toggleShipStyle(destroyerRef,"destroyer")
+        toggleShipStyle(submarineRef, 'submarine')
+        toggleShipStyle(cruiserRef, 'cruiser')
+        toggleShipStyle(battleshipRef, 'battleship')
+        toggleShipStyle(carrierRef, 'carrier')
+
+        return () => {
+
+        }
+
+    }, [isHorizontal])
+
+
+    // toggle the ship style to rotate the ship
+    function toggleShipStyle(shipRef, shipName){
+        shipRef.current.className = (isHorizontal) ? `${shipName}-container-vertical` : `${shipName}-container`
+    }
 
     // create div nodes by creating their length and assigning an ID
     function createShipNodes(name, size){
@@ -15,13 +38,6 @@ const GridDisplay = ({ shipArray, isHorizontal }) => {
         return divs
     }
 
-    if (isHorizontal){
-        console.log(destroyerRef.current);
-        // div.className = (isHorizontal) ? "destroyer-container-vertical" : "destroyer-container"
-        // destroyerRef.current.className = (isHorizontal) ? "destroyer-container-vertical" : "destroyer-container"
-    }
-
-
     return (
             <div className="grid-display" >
 
@@ -29,20 +45,20 @@ const GridDisplay = ({ shipArray, isHorizontal }) => {
                     { createShipNodes("destroyer", 2) }
                 </div>
 
-                <div className="ship submarine-container" draggable="true">
+                <div ref={submarineRef} className="ship submarine-container" draggable="true">
                     { createShipNodes("submarine", 3) }
                 </div>
 
 
-                <div className="ship cruiser-container" draggable="true">
+                <div ref={cruiserRef} className="ship cruiser-container" draggable="true">
                     { createShipNodes("cruiser", 3) }
                 </div>
                 
-                <div className="ship battleship-container" draggable="true">
+                <div ref={battleshipRef} className="ship battleship-container" draggable="true">
                     { createShipNodes("battleship", 4) }
                 </div>
 
-                <div className="ship carrier-container" draggable="true">
+                <div ref={carrierRef} className="ship carrier-container" draggable="true">
                     { createShipNodes("carrier", 5) }
                 </div>
 

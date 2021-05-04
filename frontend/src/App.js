@@ -12,7 +12,7 @@ import GridUser from './components/GridUser';
 function App() {
   const WIDTH = 10
 
-  const [isHorizontal, setIsHorizontal] = useState(true)
+  const [isHorizontal, setIsHorizontal] = useState(false)
 
   const [shipArray, setShipArray] = useState(
     [
