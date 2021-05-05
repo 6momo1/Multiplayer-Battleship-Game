@@ -44,6 +44,14 @@ const GridDisplay = ({ shipArray, isHorizontal }) => {
         console.log(e.target.childNodes[0].id);
     }
 
+    function handleOnDragStart(data) {
+        console.log(data);
+    }
+
+    function handleMouseDrop(e){
+        console.log(e);
+    }
+
     return (
             <div className="grid-display" >
 
@@ -51,7 +59,13 @@ const GridDisplay = ({ shipArray, isHorizontal }) => {
                     { createShipNodes("destroyer", 2) }
                 </div>
 
-                <div ref={submarineRef} className="ship submarine-container" draggable="true">
+                <div 
+                    ref={submarineRef} 
+                    dragData={this} 
+                    onDragStart={handleOnDragStart} 
+                    onDrop={handleMouseDown} 
+                    className="ship submarine-container" 
+                    draggable="true">
                     { createShipNodes("submarine", 3) }
                 </div>
 
