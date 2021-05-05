@@ -40,9 +40,9 @@ const GridDisplay = ({ shipArray, isHorizontal }) => {
 
     function handleMouseDown(e) {
         console.log(e)
-        console.log(e.target.childNodes.length);
+        console.log(e.target.childNodes.lengxth);
         console.log(e.target.childNodes[0].id);
-    } 
+    }
 
     return (
             <div className="grid-display" >
