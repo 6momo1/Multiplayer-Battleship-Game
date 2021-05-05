@@ -10,7 +10,7 @@ const GridDisplay = ({ shipArray, isHorizontal }) => {
     const carrierRef = useRef()
 
     useEffect(() => {
-
+        
         toggleShipStyle(destroyerRef,"destroyer")
         toggleShipStyle(submarineRef, 'submarine')
         toggleShipStyle(cruiserRef, 'cruiser')
@@ -38,17 +38,22 @@ const GridDisplay = ({ shipArray, isHorizontal }) => {
         return divs
     }
 
+    function handleMouseDown(e) {
+        console.log(e)
+        console.log(e.target.childNodes.length);
+        console.log(e.target.childNodes[0].id);
+    } 
+
     return (
             <div className="grid-display" >
 
-                <div ref={destroyerRef} className="ship destroyer-container" draggable="true">
+                <div ref={destroyerRef} onMouseDown={handleMouseDown} className="ship destroyer-container" draggable="true">
                     { createShipNodes("destroyer", 2) }
                 </div>
 
                 <div ref={submarineRef} className="ship submarine-container" draggable="true">
                     { createShipNodes("submarine", 3) }
                 </div>
-
 
                 <div ref={cruiserRef} className="ship cruiser-container" draggable="true">
                     { createShipNodes("cruiser", 3) }

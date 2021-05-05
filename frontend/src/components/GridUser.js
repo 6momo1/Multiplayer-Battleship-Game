@@ -10,7 +10,11 @@ const GridUser = ({ player }) => {
     function createNodes() {
         const arr = []
         for (let i = 0; i < WIDTH*WIDTH; i++) {
-            arr.push(0)
+            const node = React.createElement('div',{
+                className:"node", 
+                id:`user-node${i}`
+            })
+            arr.push(node)
         }  
         return arr
     }
