@@ -60,7 +60,7 @@ const GridDisplay = ({ shipArray, isHorizontal }) => {
                 </div>
 
                 <div 
-                    ref={submarineRef} 
+                    ref={submarineRef}
                     dragData={this} 
                     onDragStart={handleOnDragStart} 
                     onDrop={handleMouseDown} 

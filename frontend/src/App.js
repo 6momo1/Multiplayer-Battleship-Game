@@ -1,14 +1,15 @@
 import './App.css';
 import Board from './components/Board'
 import Info from './components/Info';
-import ShipContainer from './components/ShipContainer';
 import Grid from './components/Grid'
 import GameDisplay from './components/GameDisplay';
 import GridDisplay from './components/GridDisplay';
 import { useState } from 'react';
 import GridOpponent from './components/GridOpponent';
 import GridUser from './components/GridUser';
-
+import BoardTest from './components/BoardTest';
+import CardTest from './components/CardTest';
+import './components/styles/Test.css'
 function App() {
   const WIDTH = 10
 
@@ -61,14 +62,33 @@ function App() {
 
   return (
     <div className="App">
+    
+      <main className="flexbox">
 
-      <div className="container">
+        <BoardTest id="board-1" className="board">
+          <CardTest id="card-1" className="card" draggable="true">
+              <p>card one</p>
+          </CardTest>
+        </BoardTest>
+
+        <BoardTest id="board-2" className="board">
+          <CardTest id="card-2" className="card" draggable="true">
+              <p>card two</p>
+          </CardTest>
+        </BoardTest>
+
+      </main> 
+    
+
+
+      {/* <div className="container">
         <GridUser shipArray={shipArray}></GridUser>
         <GridOpponent shipArray={shipArray}></GridOpponent>
       </div>
 
       <Info toggleHorizontal={toggleHorizontal}/>
-      <GridDisplay shipArray={shipArray} isHorizontal={isHorizontal}></GridDisplay>
+      <GridDisplay shipArray={shipArray} isHorizontal={isHorizontal}></GridDisplay> */}
+
     </div>
   );
 }
