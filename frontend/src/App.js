@@ -9,7 +9,7 @@ import GridOpponent from './components/GridOpponent';
 import GridUser from './components/GridUser';
 import BoardTest from './components/BoardTest';
 import CardTest from './components/CardTest';
-import './components/styles/Test.css'
+// import './components/styles/Test.css'
 function App() {
   const WIDTH = 10
 
@@ -63,7 +63,7 @@ function App() {
   return (
     <div className="App">
     
-      <main className="flexbox">
+      {/* <main className="flexbox">
 
         <BoardTest id="board-1" className="board">
           <CardTest id="card-1" className="card" draggable="true">
@@ -77,17 +77,23 @@ function App() {
           </CardTest>
         </BoardTest>
 
-      </main> 
+      </main>  */}
     
 
+      <div className="container">
+        <GridUser shipArray={shipArray}>
 
-      {/* <div className="container">
-        <GridUser shipArray={shipArray}></GridUser>
-        <GridOpponent shipArray={shipArray}></GridOpponent>
+        </GridUser>
+        <GridOpponent shipArray={shipArray}>
+
+        </GridOpponent>
       </div>
 
       <Info toggleHorizontal={toggleHorizontal}/>
-      <GridDisplay shipArray={shipArray} isHorizontal={isHorizontal}></GridDisplay> */}
+
+      <GridDisplay shipArray={shipArray} isHorizontal={isHorizontal}>
+        
+      </GridDisplay>
 
     </div>
   );

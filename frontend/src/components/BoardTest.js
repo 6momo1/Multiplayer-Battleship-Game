@@ -24,7 +24,7 @@ const BoardTest = (props) => {
             onDrop={drop}
             onDragOver={dragOver}
         >
-           {props.children} 
+           {props.children}
         </div>
     )
 }

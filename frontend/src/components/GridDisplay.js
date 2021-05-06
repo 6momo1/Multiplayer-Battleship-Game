@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import './styles/GridDisplay.css'
-
+import Ship from './Ship'
 const GridDisplay = ({ shipArray, isHorizontal }) => {
 
     const destroyerRef = useRef()
@@ -11,11 +11,11 @@ const GridDisplay = ({ shipArray, isHorizontal }) => {
 
     useEffect(() => {
         
-        toggleShipStyle(destroyerRef,"destroyer")
-        toggleShipStyle(submarineRef, 'submarine')
-        toggleShipStyle(cruiserRef, 'cruiser')
-        toggleShipStyle(battleshipRef, 'battleship')
-        toggleShipStyle(carrierRef, 'carrier')
+        // toggleShipStyle(destroyerRef,"destroyer")
+        // toggleShipStyle(submarineRef, 'submarine')
+        // toggleShipStyle(cruiserRef, 'cruiser')
+        // toggleShipStyle(battleshipRef, 'battleship')
+        // toggleShipStyle(carrierRef, 'carrier')
 
         return () => {
 
@@ -44,8 +44,8 @@ const GridDisplay = ({ shipArray, isHorizontal }) => {
         console.log(e.target.childNodes[0].id);
     }
 
-    function handleOnDragStart(data) {
-        console.log(data);
+    function handleDragStart(e, data) {
+        console.log(e, data);
     }
 
     function handleMouseDrop(e){
@@ -55,31 +55,47 @@ const GridDisplay = ({ shipArray, isHorizontal }) => {
     return (
             <div className="grid-display" >
 
-                <div ref={destroyerRef} onMouseDown={handleMouseDown} className="ship destroyer-container" draggable="true">
-                    { createShipNodes("destroyer", 2) }
-                </div>
+                <Ship
+                    handleDragStart={handleDragStart}
+                    isHorizontal={isHorizontal} 
+                    onMouseDown={handleMouseDown} 
+                    name="destroyer" 
+                    nodes={2}>
+                </Ship>
 
-                <div 
-                    ref={submarineRef}
-                    dragData={this} 
-                    onDragStart={handleOnDragStart} 
-                    onDrop={handleMouseDown} 
-                    className="ship submarine-container" 
-                    draggable="true">
-                    { createShipNodes("submarine", 3) }
-                </div>
+                <Ship
+                    handleDragStart={handleDragStart}
+                    isHorizontal={isHorizontal} 
+                    onMouseDown={handleMouseDown} 
+                    name="submarine" 
+                    nodes={3}>
+                </Ship>
 
-                <div ref={cruiserRef} className="ship cruiser-container" draggable="true">
-                    { createShipNodes("cruiser", 3) }
-                </div>
+
+                <Ship
+                    handleDragStart={handleDragStart}
+                    isHorizontal={isHorizontal} 
+                    onMouseDown={handleMouseDown} 
+                    name="cruiser" 
+                    nodes={3}>
+                </Ship>
                 
-                <div ref={battleshipRef} className="ship battleship-container" draggable="true">
-                    { createShipNodes("battleship", 4) }
-                </div>
+                <Ship
+                    handleDragStart={handleDragStart}
+                    isHorizontal={isHorizontal} 
+                    onMouseDown={handleMouseDown} 
+                    name="battleship" 
+                    nodes={4}>
+                </Ship>
 
-                <div ref={carrierRef} className="ship carrier-container" draggable="true">
-                    { createShipNodes("carrier", 5) }
-                </div>
+                <Ship
+                    handleDragStart={handleDragStart}
+                    isHorizontal={isHorizontal} 
+                    onMouseDown={handleMouseDown} 
+                    name="carrier" 
+                    nodes={5}>
+                </Ship>
+
 
 
                 
