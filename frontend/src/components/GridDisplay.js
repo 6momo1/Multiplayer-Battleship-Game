@@ -3,40 +3,15 @@ import './styles/GridDisplay.css'
 import Ship from './Ship'
 const GridDisplay = ({ shipArray, isHorizontal }) => {
 
-    const destroyerRef = useRef()
-    const submarineRef = useRef()
-    const cruiserRef = useRef()
-    const battleshipRef = useRef()
-    const carrierRef = useRef()
 
     useEffect(() => {
         
-        // toggleShipStyle(destroyerRef,"destroyer")
-        // toggleShipStyle(submarineRef, 'submarine')
-        // toggleShipStyle(cruiserRef, 'cruiser')
-        // toggleShipStyle(battleshipRef, 'battleship')
-        // toggleShipStyle(carrierRef, 'carrier')
-
         return () => {
 
         }
 
     }, [isHorizontal])
 
-
-    // toggle the ship style to rotate the ship
-    function toggleShipStyle(shipRef, shipName){
-        shipRef.current.className = (isHorizontal) ? `${shipName}-container-vertical` : `${shipName}-container`
-    }
-
-    // create div nodes by creating their length and assigning an ID
-    function createShipNodes(name, size){
-        const divs = []
-        for (let i = 0; i < size; i++) {
-            divs.push(<div id={name+"-"+i}></div>)
-        }
-        return divs
-    }
 
     function handleMouseDown(e) {
         console.log(e)
@@ -55,50 +30,19 @@ const GridDisplay = ({ shipArray, isHorizontal }) => {
     return (
             <div className="grid-display" >
 
-                <Ship
-                    handleDragStart={handleDragStart}
-                    isHorizontal={isHorizontal} 
-                    onMouseDown={handleMouseDown} 
-                    name="destroyer" 
-                    nodes={2}>
-                </Ship>
+                {
+                    shipArray.map(ship => {
+                        return (
+                            <Ship 
+                                name={ship.name} 
+                                nodes={ship.directions[0].length} 
+                                handleDragStart={handleDragStart} 
+                                isHorizontal={isHorizontal}  
+                                onMouseDown={handleMouseDown}> 
+                            </Ship>)
+                    })
+                }
 
-                <Ship
-                    handleDragStart={handleDragStart}
-                    isHorizontal={isHorizontal} 
-                    onMouseDown={handleMouseDown} 
-                    name="submarine" 
-                    nodes={3}>
-                </Ship>
-
-
-                <Ship
-                    handleDragStart={handleDragStart}
-                    isHorizontal={isHorizontal} 
-                    onMouseDown={handleMouseDown} 
-                    name="cruiser" 
-                    nodes={3}>
-                </Ship>
-                
-                <Ship
-                    handleDragStart={handleDragStart}
-                    isHorizontal={isHorizontal} 
-                    onMouseDown={handleMouseDown} 
-                    name="battleship" 
-                    nodes={4}>
-                </Ship>
-
-                <Ship
-                    handleDragStart={handleDragStart}
-                    isHorizontal={isHorizontal} 
-                    onMouseDown={handleMouseDown} 
-                    name="carrier" 
-                    nodes={5}>
-                </Ship>
-
-
-
-                
             </div>
     )
 }
