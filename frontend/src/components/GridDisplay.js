@@ -4,14 +4,9 @@ import Ship from './Ship'
 const GridDisplay = ({ shipArray, isHorizontal }) => {
 
 
-    useEffect(() => {
-        
-        return () => {
-
-        }
-
-    }, [isHorizontal])
-
+    const dragItem = useRef()
+    const dragNode = useRef()
+    const [dragging, setDragging] = useState(false)
 
     function handleMouseDown(e) {
         console.log(e)
@@ -19,13 +14,36 @@ const GridDisplay = ({ shipArray, isHorizontal }) => {
         console.log(e.target.childNodes[0].id);
     }
 
-    function handleDragStart(e, data) {
-        console.log(e, data);
+    function handleDragStart(e, params) {
+
+        // console.log(e, params);
+        dragItem.current = params;
+        dragNode.current = e.target
+        dragNode.current.addEventListener('dragend', handleDragEnd)
+        setTimeout(()=> {
+            setDragging(true)
+        },0)
+        console.log(dragItem.current);
+
+    }
+
+    function handleDragEnd() {
+        console.log("Ending drag");
+        setDragging(false)
+        dragNode.current.removeEventListener('dragend', handleDragEnd)
+        dragItem.current = null
+        dragNode.current = null
+    }
+
+    function handleDragEnter(e) {
+        console.log('Entering Drag', e);
     }
 
     function handleMouseDrop(e){
         console.log(e);
     }
+
+
 
     return (
             <div className="grid-display" >
@@ -36,7 +54,9 @@ const GridDisplay = ({ shipArray, isHorizontal }) => {
                             <Ship 
                                 name={ship.name} 
                                 nodes={ship.directions[0].length} 
-                                handleDragStart={handleDragStart} 
+                                handleDragStart={handleDragStart}
+                                handleDragEnter={handleDragEnter}
+                                dragging={dragging}
                                 isHorizontal={isHorizontal}  
                                 onMouseDown={handleMouseDown}> 
                             </Ship>)

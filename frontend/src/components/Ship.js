@@ -28,11 +28,11 @@ const Ship = (ship) => {
 
     return (
         <div
-            // onMouseDown={(e) => {handleMouseDown(e)}}
             onDragStart={ e => {
                 ship.handleDragStart(e, { "name":ship.name, "nodes":ship.nodes, "isHorizontal":ship.isHorizontal })
                 }
             }
+            onDragEnter={ship.dragging?ship.handleDragEnter:null}
             ref={shipRef}
             className={`ship ${ship.name}-container`} 
             draggable="true"
