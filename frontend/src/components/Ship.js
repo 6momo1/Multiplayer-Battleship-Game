@@ -32,9 +32,8 @@ const Ship = (ship) => {
                 ship.handleDragStart(e, { "name":ship.name, "nodes":ship.nodes, "isHorizontal":ship.isHorizontal })
                 }
             }
-            onDragEnter={ship.dragging?ship.handleDragEnter:null}
             ref={shipRef}
-            className={`ship ${ship.name}-container`} 
+            className={`ship ${ship.name}-container`}
             draggable="true"
         >
             {createShipNodes(ship.name, ship.nodes)}

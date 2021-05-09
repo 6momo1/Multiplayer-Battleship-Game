@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './styles/Grid.css'
 
-const GridUser = ({ player }) => {
+const GridUser = (props, { player }) => {
 
     const WIDTH = 10 
 
@@ -24,7 +24,14 @@ const GridUser = ({ player }) => {
         <div>
             <div className="grid" className="grid-user">
                 { nodes.map( (node, nodeIdx) => (
-                    <div className="node" id={"user"+nodeIdx}></div>
+                    <div 
+                        className="node" 
+                        id={"user"+nodeIdx}
+                        onDragEnter={ (e) => {
+                            props.handleDragEnter(e, {"node":`user${nodeIdx}`})
+                        }}
+                    >                        
+                    </div>
                 )) }
             </div>
         </div>

@@ -4,7 +4,7 @@ import Info from './components/Info';
 import Grid from './components/Grid'
 import GameDisplay from './components/GameDisplay';
 import GridDisplay from './components/GridDisplay';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import GridOpponent from './components/GridOpponent';
 import GridUser from './components/GridUser';
 import BoardTest from './components/BoardTest';
@@ -14,6 +14,9 @@ function App() {
   const WIDTH = 10
 
   const [isHorizontal, setIsHorizontal] = useState(false)
+  const dragItem = useRef()
+  const dragNode = useRef()
+  const [dragging, setDragging] = useState(false)
 
   const [shipArray, setShipArray] = useState(
     [
@@ -60,6 +63,20 @@ function App() {
     console.log(isHorizontal);
   }
 
+  function handleDragEnter(e, params){
+    console.log(e.target, params);
+  }
+
+  function handleDragStart(e, params){
+        dragItem.current = params;
+        dragNode.current = e.target
+        // dragNode.current.addEventListener('dragend', handleDragEnd)
+        setTimeout(()=> {
+            setDragging(true)
+        },0)
+        console.log(dragItem.current);
+  }
+
   return (
     <div className="App">
     
@@ -81,9 +98,12 @@ function App() {
     
 
       <div className="container">
-        <GridUser shipArray={shipArray}>
-
+        <GridUser 
+          shipArray={shipArray}
+          handleDragEnter={handleDragEnter}
+        >
         </GridUser>
+
         <GridOpponent shipArray={shipArray}>
 
         </GridOpponent>

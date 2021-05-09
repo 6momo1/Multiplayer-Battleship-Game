@@ -8,15 +8,9 @@ const GridDisplay = ({ shipArray, isHorizontal }) => {
     const dragNode = useRef()
     const [dragging, setDragging] = useState(false)
 
-    function handleMouseDown(e) {
-        console.log(e)
-        console.log(e.target.childNodes.lengxth);
-        console.log(e.target.childNodes[0].id);
-    }
 
     function handleDragStart(e, params) {
 
-        // console.log(e, params);
         dragItem.current = params;
         dragNode.current = e.target
         dragNode.current.addEventListener('dragend', handleDragEnd)
@@ -55,10 +49,9 @@ const GridDisplay = ({ shipArray, isHorizontal }) => {
                                 name={ship.name} 
                                 nodes={ship.directions[0].length} 
                                 handleDragStart={handleDragStart}
-                                handleDragEnter={handleDragEnter}
                                 dragging={dragging}
-                                isHorizontal={isHorizontal}  
-                                onMouseDown={handleMouseDown}> 
+                                isHorizontal={isHorizontal}
+                            >
                             </Ship>)
                     })
                 }
