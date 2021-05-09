@@ -1,15 +1,17 @@
 import './App.css';
-import Board from './components/Board'
-import Info from './components/Info';
-import Grid from './components/Grid'
-import GameDisplay from './components/GameDisplay';
 import GridDisplay from './components/GridDisplay';
+import Info from './components/Info';
 import { useState, useRef } from 'react';
 import GridOpponent from './components/GridOpponent';
 import GridUser from './components/GridUser';
+import Ship from './components/Ship'
+import Board from './components/Board'
+import Grid from './components/Grid'
+import GameDisplay from './components/GameDisplay';
 import BoardTest from './components/BoardTest';
 import CardTest from './components/CardTest';
-// import './components/styles/Test.css'
+
+
 function App() {
   const WIDTH = 10
 
@@ -65,37 +67,30 @@ function App() {
 
   function handleDragEnter(e, params){
     console.log(e.target, params);
+    console.log("dragItem:",dragItem.current);
+
   }
 
   function handleDragStart(e, params){
         dragItem.current = params;
         dragNode.current = e.target
-        // dragNode.current.addEventListener('dragend', handleDragEnd)
+        dragNode.current.addEventListener('dragend', handleDragEnd)
         setTimeout(()=> {
             setDragging(true)
         },0)
-        console.log(dragItem.current);
+        console.log(dragItem.current)
   }
+
+  function handleDragEnd() {
+        console.log("Ending drag")
+        setDragging(false)
+        dragNode.current.removeEventListener('dragend', handleDragEnd)
+        dragItem.current = null
+        dragNode.current = null
+    }
 
   return (
     <div className="App">
-    
-      {/* <main className="flexbox">
-
-        <BoardTest id="board-1" className="board">
-          <CardTest id="card-1" className="card" draggable="true">
-              <p>card one</p>
-          </CardTest>
-        </BoardTest>
-
-        <BoardTest id="board-2" className="board">
-          <CardTest id="card-2" className="card" draggable="true">
-              <p>card two</p>
-          </CardTest>
-        </BoardTest>
-
-      </main>  */}
-    
 
       <div className="container">
         <GridUser 
@@ -109,10 +104,24 @@ function App() {
         </GridOpponent>
       </div>
 
-      <Info toggleHorizontal={toggleHorizontal}/>
+      <Info toggleHorizontal={toggleHorizontal}>
+      </Info>
 
       <GridDisplay shipArray={shipArray} isHorizontal={isHorizontal}>
-        
+        {
+            shipArray.map(ship => {
+                return (
+                    <Ship 
+                        name={ship.name} 
+                        nodes={ship.directions[0].length} 
+                        handleDragStart={handleDragStart}
+                        dragging={dragging}
+                        isHorizontal={isHorizontal}
+                    >
+                    </Ship>
+                )
+            })
+        }
       </GridDisplay>
 
     </div>
