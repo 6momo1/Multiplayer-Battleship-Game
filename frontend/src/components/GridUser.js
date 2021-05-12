@@ -28,7 +28,7 @@ const GridUser = (props, { player }) => {
                         className="node" 
                         id={"user"+nodeIdx}
                         onDragEnter={ (e) => {
-                            props.handleDragEnter(e, {"node":`user${nodeIdx}`})
+                            props.handleDragEnter(e, {"id":`user${nodeIdx}`, "node":nodeIdx, "player": "user"})
                         }}
                     >                        
                     </div>

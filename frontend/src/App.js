@@ -1,4 +1,5 @@
 import './App.css';
+import './components/GridDisplay'
 import GridDisplay from './components/GridDisplay';
 import Info from './components/Info';
 import { useState, useRef } from 'react';
@@ -16,9 +17,12 @@ function App() {
   const WIDTH = 10
 
   const [isHorizontal, setIsHorizontal] = useState(false)
+  const [dragging, setDragging] = useState(false)
+  const [hoveredNode, setHoveredNode] = useState(null)
+
   const dragItem = useRef()
   const dragNode = useRef()
-  const [dragging, setDragging] = useState(false)
+  const hoveredNodeRef = useRef()
 
   const [shipArray, setShipArray] = useState(
     [
@@ -65,10 +69,33 @@ function App() {
     console.log(isHorizontal);
   }
 
-  function handleDragEnter(e, params){
-    console.log(e.target, params);
-    console.log("dragItem:",dragItem.current);
+  function placeShipOnGrid(){
 
+    // get the name of the ship so we know what color to apply to the nodes
+    const shipName = dragItem.current.name
+
+    if (hoveredNodeRef.current.classList.contains('taken')){
+      return false
+
+    } else {
+      
+      // add classes to the nodes that the ship is occupying, and apply color
+      hoveredNodeRef.current.classList.add('taken', shipName)
+
+      // for (let i = 0; i < dragItem.current.nodes; i++) {
+        
+      // }
+
+      return true
+    }
+  }
+
+  function handleDragEnter(e, params){
+    // log the node at which the ship is hovering
+    setHoveredNode(params)
+
+    // set current hovered node
+    hoveredNodeRef.current = e.target
   }
 
   function handleDragStart(e, params){
@@ -78,11 +105,15 @@ function App() {
         setTimeout(()=> {
             setDragging(true)
         },0)
-        console.log(dragItem.current)
   }
 
   function handleDragEnd() {
         console.log("Ending drag")
+
+        // place the dragging ship on the grid if applicable
+        placeShipOnGrid()
+
+        // reset the states
         setDragging(false)
         dragNode.current.removeEventListener('dragend', handleDragEnd)
         dragItem.current = null

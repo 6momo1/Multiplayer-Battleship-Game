@@ -8,7 +8,6 @@ const Ship = (ship) => {
         
         toggleShipStyle(shipRef, ship.name)
         return () => {
-            
         }
     }, [ship.isHorizontal])
 
