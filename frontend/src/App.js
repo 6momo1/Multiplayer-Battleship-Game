@@ -104,10 +104,34 @@ function App() {
     } else {
       
       if (!shipIsHorizontal) {
+
+        // if ship is horizontal, color the grid nodes incremented by 1
         shipAttributes['directions'][0].forEach( (node, idx) => {
-          gridRef.current.childNodes[hoveredNodeIndex + idx].classList.add(shipName)
+          const currentNode = gridRef.current.childNodes[hoveredNodeIndex + idx]
+
+          // check if current looped node is taken
+          if ( currentNode.classList.contains('taken')) {
+            return false
+          }
+
+          currentNode.classList.add(shipName, 'taken')
         })
-        console.log('class added');
+
+      } else {
+
+        // if ship is vertical, color the grid nodes incremented by 10
+        shipAttributes['directions'][1].forEach( (relativePosition) => {
+
+          const currentNode = gridRef.current.childNodes[hoveredNodeIndex + relativePosition] 
+          
+          // check if current looped node is taken
+          if (currentNode.classList.contains('taken')){
+            return false
+          }
+
+          currentNode.classList.add(shipName, 'taken')
+
+        })
       }
       
 
