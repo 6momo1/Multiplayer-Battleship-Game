@@ -9,6 +9,7 @@ import Ship from './components/Ship'
 
 
 function App() {
+
   const WIDTH = 10
 
   const [isHorizontal, setIsHorizontal] = useState(false)
@@ -76,104 +77,102 @@ function App() {
     console.log(isHorizontal);
   }
 
+
+  
   function placeShipOnGrid(){
 
 
     // INITIATING CONSTANTS:
 
-    // get the name of the ship so we know what color to apply to the nodes
     const shipName = dragItem.current.name
-    const shipIsHorizontal = dragItem.current['isHorizontal']
-    const hoveredNodeIndex = hoveredNodeValuesRef.current.node // int: current node position to be placed
-    const shipLength = dragItem.current.node // ship length 
-    const lastShipIndex = hoveredNodeIndex + shipLength
 
-     
     // find the ship schema within the ship array state
     const shipAttributes = shipArray.filter( ship => {
       return ship.name == shipName
     })[0]
 
+    const shipIsHorizontal = dragItem.current['isHorizontal']
+    const hoveredNodeIndex = hoveredNodeValuesRef.current.node // int: current node position to be placed
+    const shipLength = shipAttributes.directions[0].length
+    const lastShipIndex = hoveredNodeIndex + shipLength - 1
 
-    // Create boundaries for horizontal placed ships
-    const createHorizontalBannedNodes = () => {
+     
+    // create a list of banned nodes for horizontal placed ships so that they are not out of bound
+    const createHorizontalBannedNodes = (shipLength) => {
       const arr = []
-      for (let i = 0; i <10 ; i++) {
-        arr.push(i* 10)
-        arr.push(i*10 + 1)
-        arr.push(i*10 + 2)
-        arr.push(i*10 + 3)
+
+      for (let i = 0; i < 10 ; i++) {
+
+        for ( let j = 0; j < shipLength - 1; j++ ) {
+          let val = ( 10* i ) + j
+          arr.push(val)
+        }
       }
       return arr
     } 
 
-    // Create boundaries for vertical placed ships
-    const createVerticalBannedNodes = () => {
+    // create a list of banned nodes for vertical placed ships so that they are not out of bound
+    const createVerticalBannedNodes = (shipLength) => {
       const arr = []
-      for ( let i = 99; i >= 60; i--) {
+      for (let i = 99; i > 99 - (10*(shipLength-1)); i --) {
         arr.push(i)
       }
       return arr
     }
 
-    // Error handling: array holds nodes to prevent ship nodes to go overboard 
-    const notAllowedHorizontal = createHorizontalBannedNodes().splice(0, 10* lastShipIndex)
-    const NotAllowedVertical = createVerticalBannedNodes().splice(0, 10* lastShipIndex)
-
-
-    console.log(dragItem.current);
-    console.log(shipIsHorizontal);
-    console.log(shipAttributes);
-    console.log(hoveredNodeValuesRef.current); // {id, node, player}
+    // Error handling: store array holds nodes to prevent ship nodes to go overboard
+    const notAllowedHorizontal = createHorizontalBannedNodes(shipLength)
+    const notAllowedVertical = createVerticalBannedNodes(shipLength)
 
 
 
-    // ERROR HANDLING: 
-
-    // Check if ship is outside of grid
-    if ( lastShipIndex > 99 ) {
-      return false
-    }
+    // ERROR HANDLING:
+      // 1. if ship is horizontal, check if position is allowed and check if the position to be placed is not taken
+      // 2. if ship is vertical, check if position is allowed and check if the position to be placed is not taken
 
     // check if horizontal ship placement already contains class 'taken', AND check if node is not an unathorized node
     if ( !shipIsHorizontal ){
+      
+      // if horizontal placed ship is out of bound, exit
+      const outOfBound = notAllowedHorizontal.includes(lastShipIndex)
+      if (outOfBound) {
+        console.log("ship placed out of bound");
+        return false
+      }
 
-      for (let i = 0; i < shipLength; i ++){
+      // check if nodes are already taken before placing the ship
+      for (let i = 0; i < shipAttributes['directions'][0].length; i++) {
         const currentNode = hoveredNodeIndex + i
         const taken = gridRef.current.childNodes[currentNode].classList.contains('taken')
-        const outOfBound = !notAllowedHorizontal.includes(currentNode)
-        console.log("adsfasdf");
-        console.log(taken, outOfBound);
-
-        if ( taken || outOfBound ) {
-          console.log('excecuted');
+        if ( taken ) {
+          console.log("Ship location is already taken");
           return false
         }
       }
 
 
+    } else { // else if ship is vertical
 
-    } else {
-
-      // check if vertical ship placement already contains class 'taken', AND check if node is not in a unathorized node
-
-      for (let i = 0; i <= shipLength; i ++){
+      // check if ships first node is in an unauthorized node zone 
+      if (notAllowedVertical.includes(hoveredNodeIndex)) {
+        console.log("ship placed out of bound");
+        console.log(notAllowedVertical);
+        return false
+      }
+      
+      // check if vertical ship placement already contains class 'taken'
+      for (let i = 0; i < shipLength; i ++){
         const relativePostion = shipAttributes['directions'][1][i]
         const currentNode = hoveredNodeIndex + relativePostion
         const taken = gridRef.current.childNodes[currentNode].classList.contains('taken')
-        const outOfBound = !NotAllowedVertical.includes(currentNode)
 
-        console.log("testasdfasdfsa");
-
-        if ( taken || outOfBound ) {
-          console.log('excecuted');
+        if ( taken ) {
+          console.log('Ship location is already taken');
           return false
         }
       }
 
     }
-
-
 
 
     // PLACING SHIP NODES:
@@ -208,10 +207,12 @@ function App() {
       })
     }
       
-
     return true
     
   }
+
+
+
 
   function handleDragEnter(e, params){
     // log the node at which the ship is hovering
@@ -237,7 +238,8 @@ function App() {
         console.log("Ending drag")
 
         // place the dragging ship on the grid if applicable
-        placeShipOnGrid()
+        const shipPlaced = placeShipOnGrid()
+        console.log("ship placed:",shipPlaced);
 
         // reset the states
         setDragging(false)
