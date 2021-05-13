@@ -241,12 +241,23 @@ function App() {
         const shipPlaced = placeShipOnGrid()
         console.log("ship placed:",shipPlaced);
 
+        if (shipPlaced) { 
+          removeShip(dragItem.current.name)
+        }
+
         // reset the states
         setDragging(false)
         dragNode.current.removeEventListener('dragend', handleDragEnd)
         dragItem.current = null
         dragNode.current = null
     }
+
+  
+  function removeShip(shipName) {
+    // remove ship from grid display
+    setShipArray(shipArray.filter( ship => ship.name !== shipName))
+  }
+  
 
   return (
     <div className="App">
