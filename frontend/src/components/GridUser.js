@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import './styles/Grid.css'
 
 const GridUser = (props) => {
@@ -10,10 +10,10 @@ const GridUser = (props) => {
     function createNodes() {
         const arr = []
         for (let i = 0; i < WIDTH*WIDTH; i++) {
-            const node = React.createElement('div',{
+            const node = React.createElement('div', {
                 className:"node", 
                 id:`user-node${i}`
-            })
+            })  
             arr.push(node)
         }  
         return arr
