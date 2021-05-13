@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react'
 
-const Ship = (ship) => {
+const Ship = (ship ) => {
 
     const shipRef = useRef()
 
@@ -15,7 +15,7 @@ const Ship = (ship) => {
     function createShipNodes(name, size){
         const divs = []
         for (let i = 0; i < size; i++) {
-            divs.push(<div id={name+"-"+i}></div>)
+            divs.push(<div id={name+"-"+i} key={name+"-"+i}></div>)
         }
         return divs
     }

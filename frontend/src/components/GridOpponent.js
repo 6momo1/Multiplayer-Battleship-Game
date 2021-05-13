@@ -20,7 +20,12 @@ const GridOpponent = ({ player }) => {
         <div>
             <div className="grid" className="grid-opponent">
                 { nodes.map( (node, nodeIdx) => (
-                    <div className="node" id={"opponent-square"+nodeIdx}></div>
+                    <div 
+                        className="node" 
+                        id={"opponent-square"+nodeIdx}
+                        key={"opponent-square"+nodeIdx}
+                    >
+                    </div>
                 )) }
             </div>
         </div>

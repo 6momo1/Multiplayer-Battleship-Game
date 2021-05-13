@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import './styles/Grid.css'
 
-const GridUser = (props, { player }) => {
+const GridUser = (props) => {
 
     const WIDTH = 10 
 
@@ -19,22 +19,23 @@ const GridUser = (props, { player }) => {
         return arr
     }
 
-
     return (
         <div>
-            <div className="grid" className="grid-user">
+            <div className="grid" className="grid-user" ref={props.forwardedGridRef}>
                 { nodes.map( (node, nodeIdx) => (
-                    <div 
+                    <div
                         className="node" 
                         id={"user"+nodeIdx}
+                        key={ "user"+nodeIdx }
                         onDragEnter={ (e) => {
                             props.handleDragEnter(e, {"id":`user${nodeIdx}`, "node":nodeIdx, "player": "user"})
                         }}
-                    >                        
+                    >
                     </div>
                 )) }
             </div>
         </div>
+
     )
 }
 

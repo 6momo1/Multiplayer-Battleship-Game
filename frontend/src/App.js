@@ -2,7 +2,7 @@ import './App.css';
 import './components/GridDisplay'
 import GridDisplay from './components/GridDisplay';
 import Info from './components/Info';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import GridOpponent from './components/GridOpponent';
 import GridUser from './components/GridUser';
 import Ship from './components/Ship'
@@ -19,10 +19,13 @@ function App() {
   const [isHorizontal, setIsHorizontal] = useState(false)
   const [dragging, setDragging] = useState(false)
   const [hoveredNode, setHoveredNode] = useState(null)
-
+  
+  const hoveredNodeValuesRef = useRef(null)
   const dragItem = useRef()
   const dragNode = useRef()
   const hoveredNodeRef = useRef()
+  const gridRef = useRef(null)  // reference the user grid nodes
+
 
   const [shipArray, setShipArray] = useState(
     [
@@ -64,6 +67,15 @@ function App() {
   ]
   )
 
+  useEffect(() => {
+    console.log(gridRef.current.childNodes[10]);
+  }, [])
+
+  function addToUserNodesRef(e) {
+    console.log(e);
+  }
+
+
   function toggleHorizontal() {
     setIsHorizontal(!isHorizontal)
     console.log(isHorizontal);
@@ -73,18 +85,31 @@ function App() {
 
     // get the name of the ship so we know what color to apply to the nodes
     const shipName = dragItem.current.name
+    const shipLength = dragItem.current['nodes']
+    const shipIsHorizontal = dragItem.current['isHorizontal']
+    const hoveredNodeIndex = hoveredNodeValuesRef.current.node
+  
+    const shipAttributes = shipArray.filter( ship => {
+      return ship.name == shipName
+    })[0]
+
+    console.log(shipIsHorizontal);
+    console.log(shipAttributes);
+    console.log(hoveredNodeValuesRef.current); // {id, node, player}
+
 
     if (hoveredNodeRef.current.classList.contains('taken')){
       return false
 
     } else {
       
-      // add classes to the nodes that the ship is occupying, and apply color
-      hoveredNodeRef.current.classList.add('taken', shipName)
-
-      // for (let i = 0; i < dragItem.current.nodes; i++) {
-        
-      // }
+      if (!shipIsHorizontal) {
+        shipAttributes['directions'][0].forEach( (node, idx) => {
+          gridRef.current.childNodes[hoveredNodeIndex + idx].classList.add(shipName)
+        })
+        console.log('class added');
+      }
+      
 
       return true
     }
@@ -94,8 +119,11 @@ function App() {
     // log the node at which the ship is hovering
     setHoveredNode(params)
 
+    hoveredNodeValuesRef.current = params
+
     // set current hovered node
     hoveredNodeRef.current = e.target
+    console.log(e.target);
   }
 
   function handleDragStart(e, params){
@@ -127,6 +155,8 @@ function App() {
         <GridUser 
           shipArray={shipArray}
           handleDragEnter={handleDragEnter}
+          addToUserNodesRef={addToUserNodesRef}
+          forwardedGridRef={gridRef}
         >
         </GridUser>
 
@@ -142,7 +172,8 @@ function App() {
         {
             shipArray.map(ship => {
                 return (
-                    <Ship 
+                    <Ship
+                        key={ship.name}
                         name={ship.name} 
                         nodes={ship.directions[0].length} 
                         handleDragStart={handleDragStart}
